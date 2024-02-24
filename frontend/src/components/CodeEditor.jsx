@@ -110,7 +110,7 @@ function MainBody({ darkMode, readonly }) {
         expires: expiry,
       };
       const response = await axios.post(
-        "http://localhost:8080/save",
+        "https://pastebin-clone-backend.onrender.com/save",
         dataPayload,
       );
       // Handle the response from the API call
@@ -134,26 +134,28 @@ function MainBody({ darkMode, readonly }) {
   useEffect(() => {
     if (id) {
       axios
-        .get(`http://localhost:8080/${id}`)
+        .get(`https://pastebin-clone-backend.onrender.com/${id}`)
         .then((response) => {
           setCode(response.data);
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
-          window.open(`http://localhost:8080/error`); // "_blank" parameter opens the URL in a new tab
+          window.open(`/error`); // "_blank" parameter opens the URL in a new tab
         });
     }
   }, [id]);
 
+  const baseURL = window.location.origin;
+
   const handleCopyLink = () => {
-    const url = `http://localhost:3000/id/${modalData.id}`;
+    const url = `${baseURL}/id/${modalData.id}`;
     navigator.clipboard.writeText(url);
     // alert("Link copied to clipboard!");
   };
 
   // Function to redirect to the new snippet's URL
   const handleGoToSnippet = () => {
-    const url = `http://localhost:3000/id/${modalData.id}`;
+    const url = `${baseURL}/id/${modalData.id}`;
     window.open(url, "_blank"); // "_blank" parameter opens the URL in a new tab
   };
 
